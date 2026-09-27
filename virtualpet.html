@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Virtual Pet 🐱</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(#8fd3ff, #dff6ff);
+      text-align: center;
+      color: #333;
+    }
+
+    h1 {
+      margin-top: 25px;
+      font-size: 40px;
+    }
+
+    .game {
+      width: 420px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px #777;
+    }
+
+    #pet {
+      font-size: 130px;
+      margin: 20px;
+      transition: transform 0.2s;
+    }
+
+    #message {
+      font-size: 20px;
+      min-height: 30px;
+    }
+
+    .bar {
+      background: #ddd;
+      border-radius: 20px;
+      height: 25px;
+      margin: 10px 0 20px;
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      width: 70%;
+      background: #55c878;
+      transition: width 0.3s;
+    }
+
+    button {
+      border: none;
+      padding: 12px 18px;
+      margin: 5px;
+      border-radius: 15px;
+      font-size: 17px;
+      cursor: pointer;
+      background: #6c8cff;
+      color: white;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    #coins {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🐱 My Virtual Pet</h1>
+
+  <div class="game">
+
+    <div id="coins">⭐ Coins: 0</div>
+
+    <div id="pet">🐱</div>
+
+    <div id="message">Hello! I'm hungry! 😺</div>
+
+    <p>🍖 Hunger</p>
+    <div class="bar">
+      <div id="hunger" class="fill"></div>
+    </div>
+
+    <p>❤️ Happiness</p>
+    <div class="bar">
+      <div id="happiness" class="fill"></div>
+    </div>
+
+    <p>⚡ Energy</p>
+    <div class="bar">
+      <div id="energy" class="fill"></div>
+    </div>
+
+    <button onclick="feed()">🍖 Feed</button>
+    <button onclick="play()">🎾 Play</button>
+    <button onclick="sleep()">😴 Sleep</button>
+    <button onclick="petCat()">❤️ Pet</button>
+
+  </div>
+
+<script>
+
+let hunger = 70;
+let happiness = 70;
+let energy = 70;
+let coins = 0;
+
+function update() {
+
+  document.getElementById("hunger").style.width = hunger + "%";
+  document.getElementById("happiness").style.width = happiness + "%";
+  document.getElementById("energy").style.width = energy + "%";
+
+  document.getElementById("coins").innerText =
+    "⭐ Coins: " + coins;
+}
+
+function message(text) {
+  document.getElementById("message").innerText = text;
+
+  document.getElementById("pet").style.transform = "scale(1.2)";
+
+  setTimeout(() => {
+    document.getElementById("pet").style.transform = "scale(1)";
+  }, 200);
+}
+
+function feed() {
+
+  if (hunger >= 100) {
+    message("I'm already full! 😸");
+    return;
+  }
+
+  hunger += 20;
+
+  if (hunger > 100) hunger = 100;
+
+  coins += 2;
+
+  message("YUM! 🍖😺");
+
+  update();
+}
+
+function play() {
+
+  if (energy < 15) {
+    message("I'm too tired! 😴");
+    return;
+  }
+
+  happiness += 20;
+  energy -= 15;
+  hunger -= 10;
+  coins += 3;
+
+  if (happiness > 100) happiness = 100;
+  if (hunger < 0) hunger = 0;
+
+  message("That was fun! 🎾😸");
+
+  update();
+}
+
+function sleep() {
+
+  energy += 30;
+
+  if (energy > 100) energy = 100;
+
+  message("Zzzzz... 😴💤");
+
+  update();
+}
+
+function petCat() {
+
+  happiness += 10;
+
+  if (happiness > 100) happiness = 100;
+
+  coins += 1;
+
+  message("Prrrrr... ❤️🐱");
+
+  update();
+}
+
+/* Pet slowly gets hungry over time */
+
+setInterval(() => {
+
+  hunger -= 2;
+  happiness -= 1;
+  energy -= 1;
+
+  if (hunger < 0) hunger = 0;
+  if (happiness < 0) happiness = 0;
+  if (energy < 0) energy = 0;
+
+  update();
+
+}, 5000);
+
+update();
+
+</script>
+
+</body>
+</html>
